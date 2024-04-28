@@ -7,7 +7,7 @@ const Context= (props)=>{
     const getProducts = async()=>{
         try{
           const {data}= await axios("./products")
-          console.log(data)
+          setProducts(data);
         }catch(error){
           console.log(error);
         }
@@ -17,9 +17,7 @@ const Context= (props)=>{
         getProducts();
     },[])
   return (
-    <div>
-     return <productContext.Provider value={[products ,setProducts]}>{props.children}</productContext.Provider> 
-    </div>
+     <productContext.Provider value={[products ,setProducts]}>{props.children}</productContext.Provider> 
   )
 }
 
