@@ -1,21 +1,26 @@
-import React, {useEffect, useState } from 'react'
+import React, {useContext, useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
  import axios from '../helper/axios';
 import Loading from './Loading';
+import { productContext } from '../helper/Context';
 
 function Details() {
   const {id}= useParams();
-  const [Product,setProduct]=useState(null)
-  const getSingleData = async ()=>{
-    try{
-      const {data}= await axios.get(`./products/${id}`)
-      setProduct(data);
-    }catch(error){
-      console.log(error);
-    }
-  }
+  const [Product,setProduct]=useState(null);
+  const [products, setproducts] = useContext(productContext);
+  // const getSingleData = async ()=>{
+  //   try{
+  //     const {data}= await axios.get(`./products/${id}`)
+  //     setProduct(data);
+  //   }catch(error){
+  //     console.log(error);
+  //   }
+  // }
   useEffect(()=>{
-    getSingleData()
+    if(!Product){
+      setProduct(products.filter((p)=> p.id == id)[0])
+    }
+   
   },[])
   return Product ? (
     <div className='w-[70%] py-[10%] flex h-full m-auto py-[10%] px-[5%]'>
